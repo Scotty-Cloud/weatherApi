@@ -50,14 +50,14 @@ function getLocationPoint(city) {
 function buildTableRow(period) {
   let row = weatherTable.insertRow();
 
-  let tableData1 = row.insertCell();
-  tableData1.innerText = period.name;
+  let cell1 = row.insertCell();
+  cell1.innerText = period.name;
 
-  let tableData2 = row.insertCell();
-  tableData2.innerText = `Temperature: ${period.temperature} F`;
+  let cell2 = row.insertCell();
+  cell2.innerText = `Temperature: ${period.temperature} F`;
 
-  let tableData3 = row.insertCell();
-  tableData3.innerText = period.detailedForecast;
+  let cell3 = row.insertCell();
+  cell3.innerText = period.detailedForecast;
 }
 
 cityList.addEventListener("change", handleCityChanged);
