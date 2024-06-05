@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather</title>
-</head>
-<body>
+    <link
+      rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"/>
+  </head>
+  <body>
     <main>
-        <h1>Weather</h1>
-        <select id="city select">
-            <option value="">Select a city</option>
-        </select>
-        <div id="city-cards">
-            <!-- city card data displayed here -->
-        </div>
+      <h1>Weather</h1>
+      <select id="city-dropdown-option" onchange="handleCityChanged();">
+        <!-- <option value="">Select a City</option> -->
+      </select>
+      <table>
+        <tbody id="weatherTableBody"></tbody>
+      </table>
     </main>
-</body>
+    <script src="weather.js"></script>
+  </body>
 </html>
