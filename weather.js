@@ -43,13 +43,24 @@ function getLocationPoint(city) {
    .then(response => response.json())
    .then(forecast => {
       weatherTable.innerText = "";
+
       let headerRow = weatherTable.insertRow();
+      
       let cell1 = headerRow.insertCell();
       cell1.innerText = "Day";
+
       let cell2 = headerRow.insertCell();
       cell2.innerText = "Temperature";
+
       let cell3 = headerRow.insertCell();
-      cell3.innerText = "Description";
+      cell3.innerText = "Wind Speed"
+      
+      let cell4 = headerRow.insertCell();
+      cell4.innerText = "Wind Direction"
+
+      let cell5 = headerRow.insertCell();
+      cell5.innerText = "Description";
+
       forecast.properties.periods.forEach(buildTableRow);
     });
 }
@@ -64,7 +75,14 @@ function buildTableRow(period) {
   cell2.innerText = `${period.temperature} °F`;
 
   let cell3 = row.insertCell();
-  cell3.innerText = period.detailedForecast;
+  cell3.innerText = `${period.windSpeed}`
+
+  let cell4 = row.insertCell()
+  cell4.innerText = `${period.windDirection}`
+
+  let cell5 = row.insertCell();
+  cell5.innerText = period.detailedForecast;
+
 }
 
 cityList.addEventListener("change", handleCityChanged);
