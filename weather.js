@@ -37,15 +37,22 @@ function loadCityDropDownList() {
 loadCityDropDownList();
 
 function getLocationPoint(city) {
-    fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`)
-     .then(response => response.json())
-     .then(point => fetch(point.properties.forecast))
-     .then(response => response.json())
-     .then(forecast => {
-        weatherTable.innerText = "";
-        forecast.properties.periods.forEach(buildTableRow);
-      });
-  }
+  fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`)
+   .then(response => response.json())
+   .then(point => fetch(point.properties.forecast))
+   .then(response => response.json())
+   .then(forecast => {
+      weatherTable.innerText = "";
+      let headerRow = weatherTable.insertRow();
+      let cell1 = headerRow.insertCell();
+      cell1.innerText = "Day";
+      let cell2 = headerRow.insertCell();
+      cell2.innerText = "Temperature";
+      let cell3 = headerRow.insertCell();
+      cell3.innerText = "Description";
+      forecast.properties.periods.forEach(buildTableRow);
+    });
+}
 
 function buildTableRow(period) {
   let row = weatherTable.insertRow();
@@ -54,7 +61,7 @@ function buildTableRow(period) {
   cell1.innerText = period.name;
 
   let cell2 = row.insertCell();
-  cell2.innerText = `Temperature: ${period.temperature} F`;
+  cell2.innerText = `${period.temperature} °F`;
 
   let cell3 = row.insertCell();
   cell3.innerText = period.detailedForecast;
