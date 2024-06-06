@@ -36,33 +36,67 @@ function loadCityDropDownList() {
 }
 loadCityDropDownList();
 
-function getLocationPoint(city) {
-  fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`)
-   .then(response => response.json())
-   .then(point => fetch(point.properties.forecast))
-   .then(response => response.json())
-   .then(forecast => {
-      weatherTable.innerText = "";
+// .then 
+// function getLocationPoint(city) {
+//   fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`)
+//    .then(response => response.json())
+//    .then(point => fetch(point.properties.forecast))
+//    .then(response => response.json())
+//    .then(forecast => {
+//       weatherTable.innerText = "";
 
-      let headerRow = weatherTable.insertRow();
+//       let headerRow = weatherTable.insertRow();
       
-      let cell1 = headerRow.insertCell();
-      cell1.innerText = "Day";
+//       let cell1 = headerRow.insertCell();
+//       cell1.innerText = "Day";
 
-      let cell2 = headerRow.insertCell();
-      cell2.innerText = "Temperature";
+//       let cell2 = headerRow.insertCell();
+//       cell2.innerText = "Temperature";
 
-      let cell3 = headerRow.insertCell();
-      cell3.innerText = "Wind Speed"
+//       let cell3 = headerRow.insertCell();
+//       cell3.innerText = "Wind Speed"
       
-      let cell4 = headerRow.insertCell();
-      cell4.innerText = "Wind Direction"
+//       let cell4 = headerRow.insertCell();
+//       cell4.innerText = "Wind Direction"
 
-      let cell5 = headerRow.insertCell();
-      cell5.innerText = "Description";
+//       let cell5 = headerRow.insertCell();
+//       cell5.innerText = "Description";
 
-      forecast.properties.periods.forEach(buildTableRow);
-    });
+//       forecast.properties.periods.forEach(buildTableRow);
+//     });
+// }
+
+// async await method
+async function getLocationPoint(city) {
+  try {
+    const response = await fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`);
+    const point = await response.json();
+    const forecastResponse = await fetch(point.properties.forecast);
+    const forecast = await forecastResponse.json();
+
+    weatherTable.innerText = "";
+
+    let headerRow = weatherTable.insertRow();
+    
+    let cell1 = headerRow.insertCell();
+    cell1.innerText = "Day";
+
+    let cell2 = headerRow.insertCell();
+    cell2.innerText = "Temperature";
+
+    let cell3 = headerRow.insertCell();
+    cell3.innerText = "Wind Speed";
+      
+    let cell4 = headerRow.insertCell();
+    cell4.innerText = "Wind Direction";
+
+    let cell5 = headerRow.insertCell();
+    cell5.innerText = "Description";
+
+    forecast.properties.periods.forEach(buildTableRow);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function buildTableRow(period) {

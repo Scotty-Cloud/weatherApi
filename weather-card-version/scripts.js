@@ -36,16 +36,33 @@ function loadCityDropDownList() {
 }
 loadCityDropDownList();
 
-function getLocationPoint(city) {
-  fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`)
-    .then((response) => response.json())
-    .then((point) => fetch(point.properties.forecast))
-    .then((response) => response.json())
-    .then((forecast) => {
-      weatherContainer.innerHTML = "";
+// .then solution
+// function getLocationPoint(city) {
+//   fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`)
+//     .then((response) => response.json())
+//     .then((point) => fetch(point.properties.forecast))
+//     .then((response) => response.json())
+//     .then((forecast) => {
+//       weatherContainer.innerHTML = "";
 
-      forecast.properties.periods.forEach(buildWeatherCard);
-    });
+//       forecast.properties.periods.forEach(buildWeatherCard);
+//     });
+// }
+
+// async await method
+async function getLocationPoint(city) {
+  try {
+    const response = await fetch(`https://api.weather.gov/points/${city.lat},${city.lon}`);
+    const point = await response.json();
+    const forecastResponse = await fetch(point.properties.forecast);
+    const forecast = await forecastResponse.json();
+
+    weatherContainer.innerHTML = "";
+
+    forecast.properties.periods.forEach(buildWeatherCard);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function buildWeatherCard(period) {
